@@ -12,10 +12,10 @@ import whois
 app = Flask(__name__)
 
 # Load the trained model
-loaded_model = pickle.load(open("XGBoostClassifierMAXWithWebTrafficOLD.pickle.dat", "rb"))
+loaded_model = pickle.load(open("./models/XGBoostClassifierMAXWithWebTrafficOLD.pickle.dat", "rb"))
 
 # Load the list of top 1000 websites
-top1kWebsites = pd.read_csv('top1kwebsites.csv')
+top1kWebsites = pd.read_csv('./datasets/top1kwebsites.csv')
 top1kWebsites.columns = ['Domain']
 top1kWebsiteslist = top1kWebsites['Domain'].tolist()
 
