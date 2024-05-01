@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL API Extension</title>
     <style>
+        /* Your existing CSS styles */
+            
         body {
             width: 600px;
             font-family: Roboto, sans-serif;
@@ -60,7 +62,14 @@
     <div class="container">
         <h1 id="heading">URL API Extension</h1>
         <p id="message">Response from API:</p>
-        <!-- <pre id="response"></pre> -->
+        <div id="userInput" style="display: none;">
+            <label for="userBelief">Do you believe this is a phishing website?</label><br>
+            <input type="radio" id="yes" name="userBelief" value="1">
+            <label for="yes">Yes</label>
+            <input type="radio" id="no" name="userBelief" value="0">
+            <label for="no">No</label><br>
+            <button id="submitBelief">Submit</button>
+        </div>
     </div>
     <script src="popup.js"></script>
 </body>
