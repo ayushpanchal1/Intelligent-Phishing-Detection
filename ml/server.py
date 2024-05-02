@@ -14,7 +14,6 @@ app = Flask(__name__)
 # Load the trained model
 loaded_model = pickle.load(open("./models/XGBoostClassifierMAXWithWebTrafficOLD.pickle.dat", "rb"))
 
-# Load the list of top 1000 websites
 top1kWebsites = pd.read_csv('./datasets/top1kwebsites.csv')
 top1kWebsites.columns = ['Domain']
 top1kWebsiteslist = top1kWebsites['Domain'].tolist()
@@ -207,20 +206,12 @@ def predict_phishing(url):
         return 'Legitimate'
     return "Phishing" if predicted_class[0] == 1 else "Legitimate"
 
-# @app.route('/predict', methods=['POST'])
-# def predict():
-#     data = request.get_json()
-#     url = data['url']
-#     result = predict_phishing(url)
-#     return jsonify({"result": result})
-
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
     url = data['url']
     result = predict_phishing(url)
-    features = featureExtraction(url) # this gets called twice, once here and again in the predict_phishing func 
-                                      # uhhh well it works and is fast enough for now
+    features = featureExtraction(url) 
     input_data = pd.DataFrame([features], columns=feature_names)
     input_data = input_data.drop(['Domain'], axis=1).copy()
     input_data_dict = input_data.to_dict(orient='records')

@@ -1,35 +1,3 @@
-// chrome.storage.local.get('response', function(data) {
-//     if (chrome.runtime.lastError) {
-//         console.error(chrome.runtime.lastError.message);
-//         return;
-//     }
-
-//     var response = data.response;
-
-//     if (response) {
-//         var container = document.querySelector('.container');
-//         var heading = document.getElementById('heading');
-//         var message = document.getElementById('message');
-//         var responseText = document.getElementById('response');
-
-//         if (response === "Phishing") {
-//             container.classList.add('phishing');
-//             heading.textContent = "Warning: Potential phishing website detected";
-//             message.textContent = "Please proceed with caution";
-//             responseText.textContent = "The website appears to be a phishing site.";
-//         } else if (response === "Legitimate") {
-//             container.classList.add('legitimate');
-//             heading.textContent = "You are safe, the website seems legitimate";
-//             message.textContent = "Enjoy browsing!";
-//             responseText.textContent = "The website seems legitimate.";
-//         } else {
-//             // Handle other response types if needed
-//         }
-//     } else {
-//         console.error('No response data available.');
-//     }
-// });
-
 chrome.storage.local.get('response', function (data) {
     if (chrome.runtime.lastError) {
         console.error(chrome.runtime.lastError.message);
@@ -48,11 +16,10 @@ chrome.storage.local.get('response', function (data) {
             heading.textContent = "Warning: Potential phishing website detected";
             message.textContent = "Please proceed with caution";
 
-            // Show user input section
+            // Show user inputs section if url is phishing
             document.getElementById('userInput').style.display = 'block';
 
-            // Submit button event listener
-            // Submit button event listener
+            // Submit belief button event listener
             document.getElementById('submitBelief').addEventListener('click', function () {
                 var userInput = document.querySelector('input[name="userBelief"]:checked');
                 if (userInput) {
@@ -81,13 +48,17 @@ chrome.storage.local.get('response', function (data) {
                 }
             });
 
+            // Report Phishing button event listener
+            document.getElementById('reportPhish').addEventListener('click', function () {
+                chrome.tabs.create({ url: 'https://safebrowsing.google.com/safebrowsing/report_phish/?hl=en' });
+            });
 
         } else if (response === "Legitimate") {
             container.classList.add('legitimate');
             heading.textContent = "You are safe, the website seems legitimate";
             message.textContent = "Enjoy browsing!";
         } else {
-            // Handle other response types if needed
+            console.error("unexpected data received");
         }
     } else {
         console.error('No response data available.');
