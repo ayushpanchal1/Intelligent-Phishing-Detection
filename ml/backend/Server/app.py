@@ -67,11 +67,12 @@ def redirection(url):
   else:
     return 0
   
-def httpDomain(url):
-  if 'https' in url:
-    return 1
-  else:
+def httpProtocol(url):
+  protocol = urlparse(url).scheme
+  if 'https' in protocol:
     return 0
+  else:
+    return 1
   
 shortening_services = r"bit\.ly|goo\.gl|shorte\.st|go2l\.ink|x\.co|ow\.ly|t\.co|tinyurl|tr\.im|is\.gd|cli\.gs|" \
                       r"yfrog\.com|migre\.me|ff\.im|tiny\.cc|url4\.eu|twit\.ac|su\.pr|twurl\.nl|snipurl\.com|" \
@@ -207,7 +208,7 @@ def featureExtraction(url):
     features.append(getLength(url))
     features.append(getDepth(url))
     features.append(redirection(url))
-    features.append(httpDomain(url))
+    features.append(httpProtocol(url))
     features.append(tinyURL(url))
     features.append(prefixSuffix(url))
 
@@ -252,21 +253,10 @@ def predict_phishing(url):
     input_data = pd.DataFrame([features], columns=feature_names)
     input_data = input_data.drop(['Domain'], axis = 1).copy()
     predicted_class = model.predict(input_data)
-    if input_data['Web_Traffic'][0] == 0:
-        return "Legitimate"
-    return "Phishing" if predicted_class[0] == 1 else "Legitimate"
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.get_json()
-    url = data['url']
-    result = predict_phishing(url)
-    features = featureExtraction(url) # this gets called twice, once here and again in the predict_phishing func
-                                      # uhhh well it works and is fast enough for now
-    input_data = pd.DataFrame([features], columns=feature_names)
-    input_data = input_data.drop(['Domain'], axis=1).copy()
-    input_data_dict = input_data.to_dict(orient='records')
-    return jsonify({"result": result, "data": input_data_dict})
+    if predicted_class[0] == 1:
+        return "Phishing", input_data  
+    else:
+        return "Legitimate", input_data
 
 def save_feedback_to_csv(url):
   feedback_data = {'URL': url}
@@ -294,6 +284,16 @@ def execute_retrain_script():
   result = subprocess.run(command, check=True)  # Raise exception on error
   return result
 
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.get_json()
+    url = data['url']
+    result, input_data = predict_phishing(url)
+    print(url)
+    print(result) 
+    print(input_data)
+    input_data_dict = input_data.to_dict(orient='records')
+    return jsonify({"result": result, "data": input_data_dict})
 
 @app.route('/feedback', methods=['POST'])
 def feedback():
