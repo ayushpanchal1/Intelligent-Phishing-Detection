@@ -19,12 +19,14 @@ The model has a testing accuracy of 92%
 
 # Demonstration
 
-## Legitimate Website
-
-![msedge_TwSq4lNFU7](https://github.com/ayushpanchal1/Intelligent-Phishing-Detection/assets/97223612/b6702ad6-ddf3-43ee-b759-79a460e54690)
-
 ## Phishing Website (from PhishTank)
 ### [Not from the same PhishTank dataset that was used to train the model]
 
 ![EXCEL_T3L4MuOav2](https://github.com/ayushpanchal1/Intelligent-Phishing-Detection/assets/97223612/e4a63d94-6cfc-45bf-adb7-a0956dbbdad4)
+
+## Legitimate Website
+
+![msedge_TwSq4lNFU7](https://github.com/ayushpanchal1/Intelligent-Phishing-Detection/assets/97223612/b6702ad6-ddf3-43ee-b759-79a460e54690)
+
+
 
