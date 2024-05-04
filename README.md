@@ -8,6 +8,7 @@ The model has a testing accuracy of 92%
 ![Code_OazeXxs3nQ](https://github.com/ayushpanchal1/Intelligent-Phishing-Detection/assets/97223612/3aa512a6-04fd-4667-9e09-06a86d9765bb)
 
 Made with ❤️
+
 By [Ayush](https://github.com/ayushpanchal1), [Niyati](https://github.com/Niyati1206) and [Dhiraj](https://github.com/pandyadhiraj)
 
 # Preview Images
